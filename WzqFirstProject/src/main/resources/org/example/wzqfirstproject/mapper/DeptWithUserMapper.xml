@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace：最主要的作用就是绑定mapper.xml与对应那个Mapper接口的关系，要求接口名称为：全限定名 -->
+<mapper namespace="org.example.wzqfirstproject.mapper.DeptWithUserMapper">
+        <resultMap id="deptMap" type="org.example.wzqfirstproject.vo.DeptVo">
+            <result column="id" property="id"></result>
+            <result column="dept_name" property="deptName"></result>
+            <result column="description" property="description"></result>
+            <result column="address" property="address"></result>
+            <collection property="users" ofType="org.example.wzqfirstproject.entity.User">
+                <result column="id" property="id"></result>
+                <result column="user_name" property="userName"></result>
+                <result column="password" property="password"></result>
+                <result column="gender" property="gender"></result>
+                <result column="birthday" property="birthday"></result>
+                <result column="dept_id" property="deptId"></result>
+            </collection>
+        </resultMap>
+        <!-- DeptVo findDept(Integer id) -->
+        <select id="findDept" resultMap="deptMap">
+            select * from
+            department d left join user u
+            on
+            d.id = u.dept_id
+            where
+            d.id=#{id};
+        </select>
+    <!--    <select id="GetAll" resultType="org.example.wzqfirstproject.entity.Department">-->
+    <!--        select * from department-->
+    <!--    </select>-->
+</mapper>
